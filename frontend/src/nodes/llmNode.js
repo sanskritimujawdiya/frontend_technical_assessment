@@ -1,34 +1,38 @@
-// llmNode.js
-
-import { Handle, Position } from 'reactflow';
+// llmNode.js - Updated to use BaseNode
+import React from 'react';
+import { Position } from 'reactflow';
+import BaseNode from '../components/BaseNode';
 
 export const LLMNode = ({ id, data }) => {
+  const inputs = [
+    { id: 'system', position: Position.Left, top: '25px', color: '#f59e0b' },
+    { id: 'prompt', position: Position.Left, top: '75px', color: '#8b5cf6' }
+  ];
+
+  const outputs = [
+    { id: 'response', position: Position.Right, top: '50%', color: '#10b981' }
+  ];
 
   return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-system`}
-        style={{top: `${100/3}%`}}
-      />
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-prompt`}
-        style={{top: `${200/3}%`}}
-      />
-      <div>
-        <span>LLM</span>
+    <BaseNode
+      id={id}
+      data={data}
+      title="LLM"
+      inputs={inputs}
+      outputs={outputs}
+      className="llm-node"
+    >
+      <div className="llm-node-content">
+        <div className="llm-info">
+          <span>🤖 Large Language Model</span>
+        </div>
+        <div className="llm-ports">
+          <small>🟡 System Message</small>
+          <small>🟣 User Prompt</small>
+        </div>
       </div>
-      <div>
-        <span>This is a LLM.</span>
-      </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        id={`${id}-response`}
-      />
-    </div>
+    </BaseNode>
   );
-}
+};
+
+export default LLMNode;
